@@ -4,9 +4,9 @@ microservice for iComfort S30 thermostat (4 zone)
 This microservice contacts the lennox servers in the cloud to poll for zone status and to send temperature settings.
 
 ## TODO:
-[] Turn system on/off
-[] Change system mode (e.g. heat/cool)
-[] Change various system settings
+* Turn system on/off
+* Change system mode (e.g. heat/cool)
+* Change various system settings
 
 ## REQUIRED:
 
