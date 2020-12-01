@@ -1,7 +1,8 @@
-const POLL_TIME = 5 * 1000; // 3 seconds
-
 // process.env.DEBUG = "IComfortHost,HostBase,iComfort";
 process.env.DEBUG = "IComfortHost,iComfort";
+process.title = process.env.TITLE || "icomfort-microservice";
+
+const POLL_TIME = 5 * 1000; // 3 seconds
 
 const HostBase = require("microservice-core/HostBase"),
   iComfort = require("./lib/icomfort"),
