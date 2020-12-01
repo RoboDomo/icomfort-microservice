@@ -10,9 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "icomfort": "^1.4.4",
     "microservice-core": "github:robodomo/microservice-core",
-    "nodemon": "^2.0.5",
+    "nodemon": "^2.0.6",
     "superagent": "^6.1.0"
   }
 }
