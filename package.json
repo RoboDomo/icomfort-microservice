@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/nodemon ./index.js"
+    "start": "./node_modules/.bin/forever --watch ./index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "forever": "^3.0.4",
     "microservice-core": "github:robodomo/microservice-core",
-    "nodemon": "^2.0.6",
     "superagent": "^6.1.0"
   }
 }
