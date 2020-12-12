@@ -154,10 +154,15 @@ class IComfortHost extends HostBase {
     switch (command) {
       case "setpoint":
         const parts = value.split(":");
-        return this.icomfort.setTargetTemperature(
+        return await this.icomfort.setTargetTemperature(
           Number(parts[0]),
           Number(parts[1])
         );
+      case "mode":
+        return await this.icomfort.setMode(value);
+      default:
+        console.log(`Unknown command (${command}) value(${value})`);
+        break;
     }
   }
 
