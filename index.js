@@ -107,31 +107,60 @@ class IComfortHost extends HostBase {
         }
 
         try {
-          debug(this.host, log_time(), "polling for zone ", zone);
+          //          debug(this.host, log_time(), "polling for zone ", zone);
           const result = await this.icomfort.pollZone();
           if (result !== false) {
             data = result.data;
             zoneDetail = result.data.zoneDetail;
             zoneDetail.timestamp = data.timestamp = Date.now();
-            debug(this.host, "zoneDetail valid", zone);
+            //            debug(this.host, "zoneDetail valid", zone);
             if (zoneDetail) {
+              const newState = {};
               for (const detail of Object.keys(zoneDetail)) {
-                const newState = {};
                 switch (detail) {
                   case "AmbientTemperature":
                   case "CoolSetPoint":
                   case "HeatSetPoint":
                   case "SingleSetPoint":
+                  case "AmbientHumidity":
                     newState[detail] = Number(zoneDetail[detail].Value);
+                    break;
+                  case "FanMode":
+                  case "Name":
+                  case "AwayModeEnabled":
+                  case "HumidityDisplay":
+                  case "OperatingState":
+                  case "SystemMode":
+                  case "Cooling":
+                  case "Heating":
+                  case "Waiting":
+                  case "FeelsLikeEnabled":
+                  case "isFanRunning":
+                    newState[detail] = zoneDetail[detail];
                     break;
 
                   default:
-                    newState[detail] = zoneDetail[detail];
+                    //                    newState[detail] = zoneDetail[detail];
                     break;
                 }
                 this.state = newState;
               }
-              this.state = { data: data };
+              try {
+                let update = false;
+                for (const key of Object.keys(newState)) {
+                  if (this.state.data.zoneDetail[key] !== newState[key]) {
+                    update = true;
+                  }
+                }
+                if (update) {
+                  this.state = { data: { zoneDetail: newState } };
+                }
+//                else {
+//                  console.log(this.zone, "no change");
+//                }
+              } catch (e) {
+                this.state = { data: { zoneDetail: newState } };
+              }
             }
           } else {
             debug("pollZone", zone, "false");
